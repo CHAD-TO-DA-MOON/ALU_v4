@@ -12,7 +12,6 @@ module au_top (
   ) {
   
   sig rst;                  // reset signal
-  const DIV = 16;
   .clk(clk) {
     // The reset conditioner is used to synchronize the reset signal to the FPGA
     // clock. This ensures the entire FPGA comes out of reset at the same time.
@@ -20,14 +19,18 @@ module au_top (
     button_conditioner button_cond[5];
     edge_detector buttondetector[5](#RISE(1), #FALL(0));
     .rst(rst) {
-      manualTester manual_t;
+      
       multiSevenSegment multiSeg;
-      // booleanTester boolean_tester;
-      #DIV(DIV) {
-        // multi_seven_seg seg_display;
-      }
+      
+      manualTester manual_t;
+      autoTester auto_t;
+      
+      
     }
   }
+  
+  fsm tester(.clk(clk), .rst(rst)) = {AUTO, MANUAL};
+  
   
   always {
     reset_cond.in = ~rst_n; // input raw inverted reset signal
@@ -41,21 +44,49 @@ module au_top (
     io_seg = 8hff;          // turn segments off
     io_sel = 4hf;           // select no digits
     
-    // io_button
+    
     button_cond.in = io_button;
     buttondetector.in = button_cond.out;
-    manual_t.proceed = buttondetector.out[0];
+    
+    // connect manual input
+    manual_t.proceed = buttondetector.out[0]; // button to enter the next state (A,B,ALUFN)
     manual_t.data[7:0] = io_dip[0];
     manual_t.data[15:8] = io_dip[1];
     
-    // LED
-    io_led[2][2:0] = manual_t.zvn;
-    io_led[1] = manual_t.ledout[15:8];
-    io_led[0] = manual_t.ledout[7:0];
+    
+    // connect auto input
+    auto_t.io_button = buttondetector.out;
+    
     
     // 7segment
     multiSeg.values = $build(manual_t.out, 4);
-    io_seg = ~multiSeg.seg;
-    io_sel = ~multiSeg.sel;
+    
+    
+    
+    case (tester.q){
+      
+      tester.AUTO:
+        io_led = auto_t.io_led;
+        io_seg = auto_t.io_seg;
+        io_sel = auto_t.io_sel;
+        if (buttondetector.out[2]) {  // press the down button to toggle tester
+          tester.d = tester.MANUAL;
+        }
+      
+      tester.MANUAL:
+        
+        // LED
+        io_led[2][2:0] = manual_t.zvn;
+        io_led[1] = manual_t.ledout[15:8];
+        io_led[0] = manual_t.ledout[7:0];
+        io_seg = ~multiSeg.seg;
+        io_sel = ~multiSeg.sel;
+        
+        if (buttondetector.out[2]) {  // press down button to toggle tester
+          tester.d = tester.AUTO;
+        }
+      
+      
+    }
   }
 }

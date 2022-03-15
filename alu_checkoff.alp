@@ -8,6 +8,7 @@
     <src>adderTester.luc</src>
     <src>aluTester.luc</src>
     <component>counter.luc</component>
+    <src>autoTester.luc</src>
     <src>booleanTester.luc</src>
     <src>shifter.luc</src>
     <src>au_top_auto.luc</src>

@@ -2,6 +2,7 @@ module compareTester (
     input clk, 
     input rst,
     input start,      // Press the "start" button to begin the unit tester. Start = 1 -> Tester wakes up; Start = 0 -> Tester is sleeping.
+    input error,      // 1 -> tester in error mode; 0 -> tester in normal mode
     output state_indicator[4],
     output counter_indicator[8],
     output indicator[2]    // Success = 1 -> Pass the tester. Success = 0 -> Fail the tester.
@@ -40,7 +41,8 @@ module compareTester (
                         adderUnit.alufn = 6b100001; 
                         adderUnit.x = 16b0;
                         adderUnit.y = 16b0;
-                        if (compareUnit.out[0] != 1) {state.d = state.FAIL;} 
+                        if (error == 1) {if (~compareUnit.out[0] != 1) {state.d = state.FAIL;}}
+                        else{if (compareUnit.out[0] != 1) {state.d = state.FAIL;}} 
                 
 
                     b000010: 

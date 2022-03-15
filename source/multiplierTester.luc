@@ -2,6 +2,7 @@ module multiplierTester (
     input clk, 
     input rst,
     input start,      // Press the "start" button to begin the unit tester. Start = 1 -> Tester wakes up; Start = 0 -> Tester is sleeping.
+    input error,      // 1 -> tester in error mode; 0 -> tester in normal mode
     output state_indicator[4],
     output counter_indicator[8],
     output indicator[2]    // Success = 1 -> Pass the tester. Success = 0 -> Fail the tester.
@@ -31,7 +32,10 @@ module multiplierTester (
                         // 0 * 0 = 0
                         multiplierUnit.x = 16h0000;
                         multiplierUnit.y = 16h0000;
-                        if (multiplierUnit.out != 16h0000) {state.d = state.FAIL;} 
+                        if (error == 1) {if (~multiplierUnit.out != 16h0000) {state.d = state.FAIL;}}
+                        else{if (multiplierUnit.out != 16h0000) {state.d = state.FAIL;}} 
+         
+ 
          
 
                     b0010: 

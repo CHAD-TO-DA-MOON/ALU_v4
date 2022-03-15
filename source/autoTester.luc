@@ -6,10 +6,8 @@ module autoTester (
     output io_seg [8],      // 7-segment LEDs on IO Shield
     output io_sel [4]      // Digit select on IO Shield
     
-    //input io_dip [3][8]     // DIP switches on IO Shield
   ) {
   
-  const DIV = 16;
   .clk(clk) {
     // The reset conditioner is used to synchronize the reset signal to the FPGA
     // clock. This ensures the entire FPGA comes out of reset at the same time.
@@ -17,14 +15,8 @@ module autoTester (
     edge_detector buttondetector[5](#RISE(1), #FALL(0));
     .rst(rst){
       
-      // booleanTester alu_tester(.error(0));
-     shifterTester alu_tester;
+      aluTester alu_tester;
       
-      // booleanTester boolean_tester;
-      dff start_test;
-      #DIV(DIV) {
-        // multi_seven_seg seg_display;
-      }
     }
   }
   
@@ -35,21 +27,16 @@ module autoTester (
     buttondetector.in = button_cond.out;
     
     
-    if(buttondetector.out[0]) {
-        start_test.d = 1;
-    }
-    if(buttondetector.out[1]) {
-      start_test.d = 0;
-     }
     
-    io_led[0][5:0] = button_cond.out;
-    io_led[0][7] = start_test.q;
+    // io_led
+    io_led[0][2:0] = alu_tester.out;
     io_led[1][1:0] = alu_tester.indicator;
     io_led[1][7:4] = alu_tester.state_indicator;
     io_led[2] = alu_tester.counter_indicator;
     
+    
     io_sel = 4h0;
-    alu_tester.start = start_test.q;
+    alu_tester.proceed = buttondetector.out[2];
     if(alu_tester.indicator[0] == 1) {
       if(alu_tester.indicator[1] == 0) {
         io_seg = ~b11110001;
@@ -59,3 +46,4 @@ module autoTester (
     }
   }
 }
+

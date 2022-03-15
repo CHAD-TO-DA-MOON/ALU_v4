@@ -31,7 +31,7 @@ module adderTester (
                     b0001: 
                         // ADD operation test: 0 + 0
                         // 0 + 0 = 0
-                        adderUnit.alufn = 000000;  
+                        adderUnit.alufn = b000000;  
                         adderUnit.x = 16b0;
                         adderUnit.y = 16b0;
                         if (adderUnit.out != 16b0) {state.d = state.FAIL;} 
@@ -43,7 +43,7 @@ module adderTester (
                     b0010: 
                         // ADD operation test: pos + pos with overflow
                         // 32767 + 1 = 32768
-                        adderUnit.alufn = 000000;  
+                        adderUnit.alufn = b000000;  
                         adderUnit.x = 16hEFFF;
                         adderUnit.y = 16h0001;
                         if (adderUnit.out != hF000) {state.d = state.FAIL;} 
@@ -55,7 +55,7 @@ module adderTester (
                     b0011: 
                         // ADD operation test: pos + pos without overflow
                         // 2 + 3 = 5
-                        adderUnit.alufn = 000000;  
+                        adderUnit.alufn = b000000;  
                         adderUnit.x = 16h0002;
                         adderUnit.y = 16h0003;
                         if (adderUnit.out != 16h0005) {state.d = state.FAIL;} 
@@ -67,7 +67,7 @@ module adderTester (
                     b0100: 
                         // ADD operation test: pos + neg without overflow 
                         // 2 + (-3) = -1
-                        adderUnit.alufn = 000000;  
+                        adderUnit.alufn = b000000;  
                         adderUnit.x = 16h0002;
                         adderUnit.y = 16hFFFD;
                         if (adderUnit.out != 16hFFFF) {state.d = state.FAIL;} 
@@ -79,7 +79,7 @@ module adderTester (
                     b0101: 
                         // ADD operation test: pos + neg without overflow // cannot have overflow when operands have different signs
                         // 3 + (-2) = 1
-                        adderUnit.alufn = 000000;  
+                        adderUnit.alufn = b000000;  
                         adderUnit.x = 16h0003;
                         adderUnit.y = 16hFFFE;
                         if (adderUnit.out != 16h0001) {state.d = state.FAIL;} 
@@ -91,7 +91,7 @@ module adderTester (
                     b0110: 
                         // ADD operation test: neg + neg with overflow 
                         // -32767 + (-32767) = -65534
-                        adderUnit.alufn = 000000;  
+                        adderUnit.alufn = b000000;  
                         adderUnit.x = 16h8001;
                         adderUnit.y = 16h8001;
                         if (adderUnit.out != 16h0002) {state.d = state.FAIL;} 
@@ -102,19 +102,19 @@ module adderTester (
 
                     b0111: 
                         // ADD operation test: neg + neg without overflow (-2) + (-3) = -5
-                        adderUnit.alufn = 000000;  
+                        adderUnit.alufn = b000000;  
                         adderUnit.x = 16hFFFE;
                         adderUnit.y = 16hFFFD;
                         if (adderUnit.out != 16hFFFB) {state.d = state.FAIL;} 
                         if (adderUnit.z != 0) {state.d = state.FAIL;}
-                        if (adderUnit.v != 1) {state.d = state.FAIL;}
+                        if (adderUnit.v != 0) {state.d = state.FAIL;}
                         if (adderUnit.n != 1) {state.d = state.FAIL;}
                      
 
                     b1000: 
                         // SUB operation test: 0 - 0 
                         // 0 - 0 = 0
-                        adderUnit.alufn = 000001;  
+                        adderUnit.alufn = b000001;  
                         adderUnit.x = 16h0000;
                         adderUnit.y = 16h0000;
                         if (adderUnit.out != 16h0000) {state.d = state.FAIL;} 
@@ -126,7 +126,7 @@ module adderTester (
                     b1001: 
                         // SUB operation test: pos - pos without overflow
                         // 3-1 = 2
-                        adderUnit.alufn = 000001;  
+                        adderUnit.alufn = b000001;  
                         adderUnit.x = 16h0003;
                         adderUnit.y = 16h0001;
                         if (adderUnit.out != 16h0002) {state.d = state.FAIL;} 
@@ -138,7 +138,7 @@ module adderTester (
                     b1010: 
                         // SUB operation test: pos - neg with overflow
                         // 32767 - (-1) = 32768
-                        adderUnit.alufn = 000001;  
+                        adderUnit.alufn = b000001;  
                         adderUnit.x = 16h7FFF;
                         adderUnit.y = 16hFFFF;
                         if (adderUnit.out != h8000) {state.d = state.FAIL;} 
@@ -150,7 +150,7 @@ module adderTester (
                     b1011: 
                         // SUB operation test: pos - neg without overflow
                         // 3 - (-1) = 4
-                        adderUnit.alufn = 000001;  
+                        adderUnit.alufn = b000001;  
                         adderUnit.x = 16h0003;
                         adderUnit.y = 16hFFFF;
                         if (adderUnit.out != 16h0004) {state.d = state.FAIL;} 
@@ -162,7 +162,7 @@ module adderTester (
                     b1100: 
                         // SUB operation test: neg - pos with overflow
                         // -4096 - 32767 = -36863
-                        adderUnit.alufn = 000001;  
+                        adderUnit.alufn = b000001;  
                         adderUnit.x = 16hF000;
                         adderUnit.y = 16h7FFF;
                         if (adderUnit.out != 16h7001) {state.d = state.FAIL;} 
@@ -174,7 +174,7 @@ module adderTester (
                     b1101: 
                         // SUB operation test: neg - pos without overflow
                         // (-7) - 1 = -8
-                        adderUnit.alufn = 000001;  
+                        adderUnit.alufn = b000001;  
                         adderUnit.x = 16hFFF9;
                         adderUnit.y = 16h0001;
                         if (adderUnit.out != 16hFFF8) {state.d = state.FAIL;} 
@@ -186,7 +186,7 @@ module adderTester (
                     b1110: 
                         // SUB operation test: neg - neg without overflow
                         // -2 - (-3) = -5
-                        adderUnit.alufn = 000001;  
+                        adderUnit.alufn = b000001;  
                         adderUnit.x = 16hFFFE;
                         adderUnit.y = 16hFFFD;
                         if (adderUnit.out != 16h0001) {state.d = state.FAIL;} 

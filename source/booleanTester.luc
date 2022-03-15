@@ -29,14 +29,14 @@ module booleanTester (
                 case (counter.q){
                     b0001:
                         // AND operation test
-                        booleanUnit.alufn = 010000;  
+                        booleanUnit.alufn = b010000;  
                         booleanUnit.x = 16hF0F0;
                         booleanUnit.y = 16hFF0F;
                         if (booleanUnit.out != 16hF000) {state.d = state.FAIL;} 
 
                     b0010: 
                         // OR operation test
-                        booleanUnit.alufn = 010001;
+                        booleanUnit.alufn = b010001;
                         booleanUnit.x = 16hF0F0;
                         booleanUnit.y = 16hFF00;
                         if (booleanUnit.out != 16hFFF0) {state.d = state.FAIL;} 
@@ -44,7 +44,7 @@ module booleanTester (
 
                     b0011: 
                         // XOR operation test
-                        booleanUnit.alufn = 010010;
+                        booleanUnit.alufn = b010010;
                         booleanUnit.x = 16hF0F0;
                         booleanUnit.y = 16hFF00;
                         if (booleanUnit.out != 16h0FF0) {state.d = state.FAIL;} 
@@ -52,7 +52,7 @@ module booleanTester (
 
                     b0100: 
                         // "A" operation test
-                        booleanUnit.alufn = 010011;
+                        booleanUnit.alufn = b010011;
                         booleanUnit.x = 16hF0F0;
                         booleanUnit.y = 16hFF00;
                         if (booleanUnit.out != 16hF0F0) {state.d = state.FAIL;} 

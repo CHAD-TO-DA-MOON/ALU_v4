@@ -2,6 +2,8 @@ module shifterTester (
     input clk, 
     input rst,
     input start,      // Press the "start" button to begin the unit tester. Start = 1 -> Tester wakes up; Start = 0 -> Tester is sleeping.
+    output state_indicator[4],
+    output counter_indicator[8],
     output indicator[2]    // Success = 1 -> Pass the tester. Success = 0 -> Fail the tester.
 ) {
 	dff counter[4](#INIT(0), .clk(clk), .rst(rst));
@@ -10,11 +12,14 @@ module shifterTester (
 
 	always{
         indicator = b10;   // 10: pending; 11: pass all the tests; 01: fail the tester
-        shifterUnit.x = b0000000000000000;
-        shifterUnit.y = b0000000000000000;
-        shifterUnit.alufn = b000000;
+        shifterUnit.x = 16b0000000000000000;
+        shifterUnit.y = 16b0000000000000000;
+        shifterUnit.alufn = 6b000000;
 
-        if (start == 0) {state.d = state.SLEEP;}
+        if (start == 0) {
+          state.d = state.SLEEP;
+          counter.d = 0;
+        }
         
         case (state.q){
             state.SLEEP:
@@ -24,95 +29,95 @@ module shifterTester (
                 case (counter.q){
                     b0001:
                         // SHL operation test: shift FFFF left by 5
-                        shifterUnit.alufn = 011000;  
-                        shifterUnit.x = b1111111111111111;
-                        shifterUnit.y = b0000000000000101;
-                        if (shifterUnit.out != b1111111111100000) {state.d = state.FAIL;} 
+                        shifterUnit.alufn = 6b011000;  
+                        shifterUnit.x = 16b1111111111111111;
+                        shifterUnit.y = 16b0000000000000101;
+                        if (shifterUnit.out != 16b1111111111100000) {state.d = state.FAIL;} 
 
                     b0010: 
                         // SHL operation test: shift FFFF left by 0
-                        shifterUnit.alufn = 011000;
-                        shifterUnit.x = 16b1;
+                        shifterUnit.alufn = 6b011000;
+                        shifterUnit.x = 16hFFFF;
                         shifterUnit.y = 16b0;
-                        if (shifterUnit.out != 16b1) {state.d = state.FAIL;} 
+                        if (shifterUnit.out != 16hFFFF) {state.d = state.FAIL;} 
 
                     b0011:
                         // SHL operation test: shift FFFF left by 15
-                        shifterUnit.alufn = 011000;
-                        shifterUnit.x = 16b1;
-                        shifterUnit.y = b0000000000001111;
-                        if (shifterUnit.out != b1000000000000000) {state.d = state.FAIL;} 
+                        shifterUnit.alufn = 6b011000;
+                        shifterUnit.x = 16hFFFF;
+                        shifterUnit.y = 16b0000000000001111;
+                        if (shifterUnit.out != 16b1000000000000000) {state.d = state.FAIL;} 
 
                     b0100: 
                         // SHR operation test: shift FFFF right by 0
-                        shifterUnit.alufn = 011001;
-                        shifterUnit.x = 16b1;
+                        shifterUnit.alufn = 6b011001;
+                        shifterUnit.x = 16hFFFF;
                         shifterUnit.y = 16b0;
-                        if (shifterUnit.out != 16b1) {state.d = state.FAIL;} 
+                        if (shifterUnit.out != 16hFFFF) {state.d = state.FAIL;} 
                     
 
                     b0101: 
                         // SHR operation test: shift FFFF right by 15
-                        shifterUnit.alufn = 011001;
-                        shifterUnit.x = 16b1;
-                        shifterUnit.y = b0000000000001111;
-                        if (shifterUnit.out != 0000000000000001) {state.d = state.FAIL;} 
+                        shifterUnit.alufn = 6b011001;
+                        shifterUnit.x = 16hFFFF;
+                        shifterUnit.y = 16b0000000000001111;
+                        if (shifterUnit.out != 16b0000000000000001) {state.d = state.FAIL;} 
                     
 
                     b0110: 
                         // SHR operation test: shift FFFF right by 5
-                        shifterUnit.alufn = 011001;
-                        shifterUnit.x = 16b1;
-                        shifterUnit.y = b0000000000000101;
-                        if (shifterUnit.out != 0000011111111111) {state.d = state.FAIL;} 
+                        shifterUnit.alufn = 6b011001;
+                        shifterUnit.x = 16hFFFF;
+                        shifterUnit.y = 16b0000000000000101;
+                        if (shifterUnit.out != 16b0000011111111111) {state.d = state.FAIL;} 
                     
 
                     b0111: 
                         // SRA operation test: shift neg (FFFF) right by 0
-                        shifterUnit.alufn = 011010;
-                        shifterUnit.x = 16b1;
+                        shifterUnit.alufn = 6b011010;
+                        shifterUnit.x = 16hFFFF;
                         shifterUnit.y = 16b0;
-                        if (shifterUnit.out != 16b1) {state.d = state.FAIL;} 
+                        if (shifterUnit.out != 16hFFFF) {state.d = state.FAIL;} 
                     
 
                     b1000: 
                         // SRA operation test: shift pos (0FFF) right by 0
-                        shifterUnit.alufn = 011010;
-                        shifterUnit.x = b0000111111111111;
+                        shifterUnit.alufn = 6b011010;
+                        shifterUnit.x = 16b0000111111111111;
                         shifterUnit.y = 16b0;
-                        if (shifterUnit.out != b0000111111111111) {state.d = state.FAIL;} 
+                        if (shifterUnit.out != 16b0000111111111111) {state.d = state.FAIL;} 
                     
 
                     b1001: 
                         // SRA operation test: shift neg right by 15
-                        shifterUnit.alufn = 011010;
-                        shifterUnit.x = b1001111111111111;
-                        shifterUnit.y = b0000000000001111;
-                        if (shifterUnit.out != b1111111111111111) {state.d = state.FAIL;} 
+                        shifterUnit.alufn = 6b011010;
+                        shifterUnit.x = 16b1001111111111111;
+                        shifterUnit.y = 16b0000000000001111;
+                        if (shifterUnit.out != 16b1111111111111111) {state.d = state.FAIL;} 
 
 
                     b1010:
                         // SRA operation test: shift neg right by 5
-                        shifterUnit.alufn = 011010;
-                        shifterUnit.x = b1001111111111111;
-                        shifterUnit.y = b0000000000000101;
-                        if (shifterUnit.out != 1111110011111111) {state.d = state.FAIL;} 
+                        shifterUnit.alufn = 6b011010;
+                        shifterUnit.x = 16b1001111111111111;
+                        shifterUnit.y = 16b0000000000000101;
+                        if (shifterUnit.out != 16b1111110011111111) {state.d = state.FAIL;} 
                     
 
                     b1011: 
                         // SRA operation test: shift pos right by 8
-                        shifterUnit.alufn = 011010;
-                        shifterUnit.x = b0000111111111111;
-                        shifterUnit.y = b0000000000001000;
-                        if (shifterUnit.out != b0000000000001111) {state.d = state.FAIL;} 
+                        shifterUnit.alufn = 6b011010;
+                        shifterUnit.x = 16b0000111111111111;
+                        shifterUnit.y = 16b0000000000001000;
+                        if (shifterUnit.out != 16b0000000000001111) {state.d = state.FAIL;} 
                     
 
                     b1100: 
                         // SRA operation test: shift neg right by 3
-                        shifterUnit.alufn = 011010;
-                        shifterUnit.x = b1010101010101010;
-                        shifterUnit.y = b0000000000000011;
-                        if (shifterUnit.out != b1111010101010101) {state.d = state.FAIL;} 
+                        shifterUnit.alufn = 6b011010;
+                        shifterUnit.x = 16b1010101010101010;
+                        shifterUnit.y = 16b0000000000000011;
+                        if (shifterUnit.out != 16b1111010101010101) {state.d = state.FAIL;} 
 
                     b1101:
                         state.d = state.PASS;
@@ -127,5 +132,14 @@ module shifterTester (
        if(state.q == state.TEST) {
           counter.d = counter.q + 1;
         }
+        counter_indicator = counter.q;
+        case (state.q) {
+      state.SLEEP: state_indicator=b0001;
+      state.TEST:  state_indicator=b0010;
+      state.PASS:  state_indicator=b0100;
+      state.FAIL:  state_indicator=b1000;
+      default: state_indicator=b1111;
+        }
+
 	}
 }

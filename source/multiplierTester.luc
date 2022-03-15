@@ -2,6 +2,8 @@ module multiplierTester (
     input clk, 
     input rst,
     input start,      // Press the "start" button to begin the unit tester. Start = 1 -> Tester wakes up; Start = 0 -> Tester is sleeping.
+    output state_indicator[4],
+    output counter_indicator[8],
     output indicator[2]    // Success = 1 -> Pass the tester. Success = 0 -> Fail the tester.
 ) {
 	dff counter[4](#INIT(0), .clk(clk), .rst(rst));
@@ -14,7 +16,10 @@ module multiplierTester (
         multiplierUnit.y = b0000000000000000;
         multiplierUnit.alufn = b000000;
 
-        if (start == 0) {state.d = state.SLEEP;}
+        if (start == 0) {
+            state.d = state.SLEEP;
+            counter.d = 0;
+        }
         
         case (state.q){
             state.SLEEP:
@@ -159,6 +164,14 @@ module multiplierTester (
         }
         if(state.q == state.TEST) {
           counter.d = counter.q + 1;
+        }
+        counter_indicator = counter.q;
+        case (state.q) {
+          state.SLEEP: state_indicator=b0001;
+          state.TEST:  state_indicator=b0010;
+          state.PASS:  state_indicator=b0100;
+          state.FAIL:  state_indicator=b1000;
+          default: state_indicator=b1111;
         }
 	}
 }

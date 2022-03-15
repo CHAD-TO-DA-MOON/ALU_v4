@@ -1,4 +1,4 @@
-module manual_test (
+module manualTester (
     input clk,  // clock
     input rst,  // reset
     input proceed,

@@ -2,6 +2,8 @@ module compareTester (
     input clk, 
     input rst,
     input start,      // Press the "start" button to begin the unit tester. Start = 1 -> Tester wakes up; Start = 0 -> Tester is sleeping.
+    output state_indicator[4],
+    output counter_indicator[8],
     output indicator[2]    // Success = 1 -> Pass the tester. Success = 0 -> Fail the tester.
 ) {
 	dff counter[6](#INIT(0), .clk(clk), .rst(rst));
@@ -21,7 +23,10 @@ module compareTester (
         compareUnit.v = adderUnit.v;
         compareUnit.n = adderUnit.n;
 
-        if (start == 0) {state.d = state.SLEEP;}
+        if (start == 0) {
+          state.d = state.SLEEP;
+          counter.d = 0;
+        }
         
         case (state.q){
             state.SLEEP:
@@ -31,8 +36,8 @@ module compareTester (
                 case (counter.q){
                     b000001:
                         // CMPEQ: 0 == 0
-                        compareUnit.alufn = 100001;  
-                        adderUnit.alufn = 100001; 
+                        compareUnit.alufn = b100001;  
+                        adderUnit.alufn = b100001; 
                         adderUnit.x = 16b0;
                         adderUnit.y = 16b0;
                         if (compareUnit.out[0] != 1) {state.d = state.FAIL;} 
@@ -40,8 +45,8 @@ module compareTester (
 
                     b000010: 
                         // CMPEQ: pos == pos
-                        compareUnit.alufn = 100001;  
-                        adderUnit.alufn = 100001; 
+                        compareUnit.alufn = b100001;  
+                        adderUnit.alufn = b100001; 
                         adderUnit.x = 16h0111;
                         adderUnit.y = 16h0111;
                         if (compareUnit.out[0] != 1) {state.d = state.FAIL;} 
@@ -49,8 +54,8 @@ module compareTester (
 
                     b000011: 
                         // CMPEQ: neg == neg
-                        compareUnit.alufn = 100001; 
-                        adderUnit.alufn = 100001;  
+                        compareUnit.alufn = b100001; 
+                        adderUnit.alufn = b100001;  
                         adderUnit.x = 16hFFFD;
                         adderUnit.y = 16hFFFD;
                         if (compareUnit.out[0] != 1) {state.d = state.FAIL;} 
@@ -58,8 +63,8 @@ module compareTester (
 
                     b000100: 
                         // CMPEQ: pos < pos without overflow
-                        compareUnit.alufn = 100001;  
-                        adderUnit.alufn = 100001; 
+                        compareUnit.alufn = b100001;  
+                        adderUnit.alufn = b100001; 
                         adderUnit.x = 16h0003;
                         adderUnit.y = 16h0001;
                         if (compareUnit.out[0] != 0) {state.d = state.FAIL;}  
@@ -67,8 +72,8 @@ module compareTester (
 
                     b000101: 
                         // CMPEQ: neg < pos with overflow
-                        compareUnit.alufn = 100001;  
-                        adderUnit.alufn = 100001; 
+                        compareUnit.alufn = b100001;  
+                        adderUnit.alufn = b100001; 
                         adderUnit.x = 16hF001;
                         adderUnit.y = 16h7FFF;
                         if (compareUnit.out[0] != 0) {state.d = state.FAIL;}
@@ -76,8 +81,8 @@ module compareTester (
 
                     b000110: 
                         // CMPEQ: neg < pos without overflow
-                        compareUnit.alufn = 100001;  
-                        adderUnit.alufn = 100001; 
+                        compareUnit.alufn = b100001;  
+                        adderUnit.alufn = b100001; 
                         adderUnit.x = 16hFFF9;
                         adderUnit.y = 16h0001;
                         if (compareUnit.out[0] != 0) {state.d = state.FAIL;} 
@@ -85,8 +90,8 @@ module compareTester (
 
                     b000111: 
                         // CMPEQ: neg < neg without overflow
-                        compareUnit.alufn = 100001;  
-                        adderUnit.alufn = 100001; 
+                        compareUnit.alufn = b100001;  
+                        adderUnit.alufn = b100001; 
                         adderUnit.x = 16hFFFD;
                         adderUnit.y = 16hFFFE;
                         if (compareUnit.out[0] != 0) {state.d = state.FAIL;}
@@ -94,8 +99,8 @@ module compareTester (
 
                     b001000: 
                         // CMPEQ: pos > pos without overflow
-                        compareUnit.alufn = 100001;  
-                        adderUnit.alufn = 100001; 
+                        compareUnit.alufn = b100001;  
+                        adderUnit.alufn = b100001; 
                         adderUnit.x = 16h0010;
                         adderUnit.y = 16h0008;
                         if (compareUnit.out[0] != 0) {state.d = state.FAIL;}
@@ -103,8 +108,8 @@ module compareTester (
 
                     b001001: 
                         // CMPEQ: pos > neg without overflow
-                        compareUnit.alufn = 100001;  
-                        adderUnit.alufn = 100001; 
+                        compareUnit.alufn = b100001;  
+                        adderUnit.alufn = b100001; 
                         adderUnit.x = 16h0003;
                         adderUnit.y = 16hFFFF;
                         if (compareUnit.out[0] != 0) {state.d = state.FAIL;}
@@ -112,8 +117,8 @@ module compareTester (
 
                     b001010: 
                         // CMPEQ: pos > neg with overflow
-                        compareUnit.alufn = 100001; 
-                        adderUnit.alufn = 100001;  
+                        compareUnit.alufn = b100001; 
+                        adderUnit.alufn = b100001;  
                         adderUnit.x = 16h7FFF;
                         adderUnit.y = 16hFFFF;
                         if (compareUnit.out[0] != 0) {state.d = state.FAIL;}
@@ -121,8 +126,8 @@ module compareTester (
 
                      b001011: 
                         // CMPEQ: neg > neg without overflow
-                        compareUnit.alufn = 100001;  
-                        adderUnit.alufn = 100001; 
+                        compareUnit.alufn = b100001;  
+                        adderUnit.alufn = b100001; 
                         adderUnit.x = 16hFFFE;
                         adderUnit.y = 16hFFFD;
                         if (compareUnit.out[0] != 0) {state.d = state.FAIL;} 
@@ -130,8 +135,8 @@ module compareTester (
 
                     b001100: 
                         // CMPLT: 0 == 0
-                        compareUnit.alufn = 100011;  
-                        adderUnit.alufn = 100011; 
+                        compareUnit.alufn = b100011;  
+                        adderUnit.alufn = b100011; 
                         adderUnit.x = 16b0;
                         adderUnit.y = 16b0;
                         if (compareUnit.out[0] != 0) {state.d = state.FAIL;} 
@@ -139,8 +144,8 @@ module compareTester (
 
                     b001101: 
                         // CMPLT: pos == pos
-                        compareUnit.alufn = 100011;  
-                        adderUnit.alufn = 100011;  
+                        compareUnit.alufn = b100011;  
+                        adderUnit.alufn = b100011;  
                         adderUnit.x = 16h0010;
                         adderUnit.y = 16h0010;
                         if (compareUnit.out[0] != 0) {state.d = state.FAIL;} 
@@ -148,8 +153,8 @@ module compareTester (
 
                     b001110: 
                         // CMPLT: neg == neg
-                        compareUnit.alufn = 100011;  
-                        adderUnit.alufn = 100011;   
+                        compareUnit.alufn = b100011;  
+                        adderUnit.alufn = b100011;   
                         adderUnit.x = 16hE000;
                         adderUnit.y = 16hE000;
                         if (compareUnit.out[0] != 0) {state.d = state.FAIL;} 
@@ -157,8 +162,8 @@ module compareTester (
 
                     b001111: 
                         // CMPLT: pos < pos without overflow
-                        compareUnit.alufn = 100011;  
-                        adderUnit.alufn = 100011;   
+                        compareUnit.alufn = b100011;  
+                        adderUnit.alufn = b100011;   
                         adderUnit.x = 16h0060;
                         adderUnit.y = 16h0100;
                         if (compareUnit.out[0] != 1) {state.d = state.FAIL;}  
@@ -166,8 +171,8 @@ module compareTester (
 
                     b010000: 
                         // CMPLT: neg < pos without overflow
-                        compareUnit.alufn = 100011;  
-                        adderUnit.alufn = 100011; 
+                        compareUnit.alufn = b100011;  
+                        adderUnit.alufn = b100011; 
                         adderUnit.x = 16hFFF9;
                         adderUnit.y = 16h0001;
                         if (compareUnit.out[0] != 1) {state.d = state.FAIL;}
@@ -175,8 +180,8 @@ module compareTester (
 
                     b010001: 
                         // CMPLT: neg < pos with overflow
-                        compareUnit.alufn = 100011;  
-                        adderUnit.alufn = 100011;   
+                        compareUnit.alufn = b100011;  
+                        adderUnit.alufn = b100011;   
                         adderUnit.x = 16hF000;
                         adderUnit.y = 16h7FFF;
                         if (compareUnit.out[0] != 1) {state.d = state.FAIL;} 
@@ -184,8 +189,8 @@ module compareTester (
 
                     b010010: 
                         // CMPLT: neg < neg without overflow
-                        compareUnit.alufn = 100011;  
-                        adderUnit.alufn = 100011; 
+                        compareUnit.alufn = b100011;  
+                        adderUnit.alufn = b100011; 
                         adderUnit.x = 16hFFED;
                         adderUnit.y = 16hFFEE;
                         if (compareUnit.out[0] != 1) {state.d = state.FAIL;}
@@ -193,8 +198,8 @@ module compareTester (
 
                     b010011: 
                         // CMPLT: pos > pos without overflow
-                        compareUnit.alufn = 100011;  
-                        adderUnit.alufn = 100011;   
+                        compareUnit.alufn = b100011;  
+                        adderUnit.alufn = b100011;   
                         adderUnit.x = 16h0110;
                         adderUnit.y = 16h0100;
                         if (compareUnit.out[0] != 0) {state.d = state.FAIL;}
@@ -202,8 +207,8 @@ module compareTester (
 
                     b010100: 
                         // CMPLT: pos > neg without overflow
-                        compareUnit.alufn = 100011;  
-                        adderUnit.alufn = 100011; 
+                        compareUnit.alufn = b100011;  
+                        adderUnit.alufn = b100011; 
                         adderUnit.x = 16h0020;
                         adderUnit.y = 16hFFFF;
                         if (compareUnit.out[0] != 0) {state.d = state.FAIL;}
@@ -211,8 +216,8 @@ module compareTester (
 
                     b010101: 
                         // CMPLT: pos > neg with overflow
-                        compareUnit.alufn = 100011;  
-                        adderUnit.alufn = 100011;  
+                        compareUnit.alufn = b100011;  
+                        adderUnit.alufn = b100011;  
                         adderUnit.x = 16h7FFF;
                         adderUnit.y = 16hFFFF;
                         if (compareUnit.out[0] != 0) {state.d = state.FAIL;}
@@ -220,8 +225,8 @@ module compareTester (
 
                     b010110: 
                         // CMPLT: neg > neg without overflow
-                        compareUnit.alufn = 100011;  
-                        adderUnit.alufn = 100011;  
+                        compareUnit.alufn = b100011;  
+                        adderUnit.alufn = b100011;  
                         adderUnit.x = 16hFEEE;
                         adderUnit.y = 16hF111;
                         if (compareUnit.out[0] != 0) {state.d = state.FAIL;} 
@@ -230,8 +235,8 @@ module compareTester (
 
                     b010111: 
                         // CMPLE: 0 == 0
-                        compareUnit.alufn = 100101;  
-                        adderUnit.alufn = 100101; 
+                        compareUnit.alufn = b100101;  
+                        adderUnit.alufn = b100101; 
                         adderUnit.x = 16b0;
                         adderUnit.y = 16b0;
                         if (compareUnit.out[0] != 1) {state.d = state.FAIL;} 
@@ -239,8 +244,8 @@ module compareTester (
 
                     b011000: 
                         // CMPLE: pos == pos
-                        compareUnit.alufn = 100101;  
-                        adderUnit.alufn = 100101;   
+                        compareUnit.alufn = b100101;  
+                        adderUnit.alufn = b100101;   
                         adderUnit.x = 16h0989;
                         adderUnit.y = 16h0989;
                         if (compareUnit.out[0] != 1) {state.d = state.FAIL;} 
@@ -248,8 +253,8 @@ module compareTester (
 
                     b011001: 
                         // CMPLE: neg == neg
-                        compareUnit.alufn = 100101;  
-                        adderUnit.alufn = 100101;   
+                        compareUnit.alufn = b100101;  
+                        adderUnit.alufn = b100101;   
                         adderUnit.x = 16hF110;
                         adderUnit.y = 16hF110;
                         if (compareUnit.out[0] != 1) {state.d = state.FAIL;} 
@@ -257,8 +262,8 @@ module compareTester (
 
                     b011010: 
                         // CMPLE: pos < pos without overflow
-                        compareUnit.alufn = 100101;  
-                        adderUnit.alufn = 100101;  
+                        compareUnit.alufn = b100101;  
+                        adderUnit.alufn = b100101;  
                         adderUnit.x = 16h0180;
                         adderUnit.y = 16h0120;
                         if (compareUnit.out[0] != 1) {state.d = state.FAIL;}  
@@ -266,8 +271,8 @@ module compareTester (
 
                     b011011: 
                         // CMPLE: neg < pos without overflow
-                        compareUnit.alufn = 100101;  
-                        adderUnit.alufn = 100101;   
+                        compareUnit.alufn = b100101;  
+                        adderUnit.alufn = b100101;   
                         adderUnit.x = 16hFFF9;
                         adderUnit.y = 16h0010;
                         if (compareUnit.out[0] != 1) {state.d = state.FAIL;}
@@ -275,8 +280,8 @@ module compareTester (
 
                     b011100: 
                         // CMPLE: neg < pos with overflow
-                        compareUnit.alufn = 100101;  
-                        adderUnit.alufn = 100101;  
+                        compareUnit.alufn = b100101;  
+                        adderUnit.alufn = b100101;  
                         adderUnit.x = 16hF000;
                         adderUnit.y = 16h8FFF;
                         if (compareUnit.out[0] != 1) {state.d = state.FAIL;} 
@@ -284,8 +289,8 @@ module compareTester (
 
                     b011101: 
                         // CMPLE: neg < neg without overflow
-                        compareUnit.alufn = 100101;  
-                        adderUnit.alufn = 100101; 
+                        compareUnit.alufn = b100101;  
+                        adderUnit.alufn = b100101; 
                         adderUnit.x = 16hF001;
                         adderUnit.y = 16hFEEE;
                         if (compareUnit.out[0] != 1) {state.d = state.FAIL;}
@@ -293,8 +298,8 @@ module compareTester (
 
                     b011110: 
                         // CMPLE: pos > pos without overflow
-                        compareUnit.alufn = 100101;  
-                        adderUnit.alufn = 100101;   
+                        compareUnit.alufn = b100101;  
+                        adderUnit.alufn = b100101;   
                         adderUnit.x = 16h0888;
                         adderUnit.y = 16h0666;
                         if (compareUnit.out[0] != 0) {state.d = state.FAIL;}
@@ -302,8 +307,8 @@ module compareTester (
 
                     b011111: 
                         // CMPLT: pos > neg without overflow
-                        compareUnit.alufn = 100101;  
-                        adderUnit.alufn = 100101;   
+                        compareUnit.alufn = b100101;  
+                        adderUnit.alufn = b100101;   
                         adderUnit.x = 16h0011;
                         adderUnit.y = 16hFFFF;
                         if (compareUnit.out[0] != 0) {state.d = state.FAIL;}
@@ -311,8 +316,8 @@ module compareTester (
 
                     b100000: 
                         // CMPLT: pos > neg with overflow
-                        compareUnit.alufn = 100101;  
-                        adderUnit.alufn = 100101;   
+                        compareUnit.alufn = b100101;  
+                        adderUnit.alufn = b100101;   
                         adderUnit.x = 16h7FFF;
                         adderUnit.y = 16hFF99;
                         if (compareUnit.out[0] != 0) {state.d = state.FAIL;}
@@ -320,8 +325,8 @@ module compareTester (
 
                     b100001: 
                         // CMPLT: neg > neg without overflow
-                        compareUnit.alufn = 100101;  
-                        adderUnit.alufn = 100101;  
+                        compareUnit.alufn = b100101;  
+                        adderUnit.alufn = b100101;  
                         adderUnit.x = 16hFBBB;
                         adderUnit.y = 16hFCCC;
                         if (compareUnit.out[0] != 0) {state.d = state.FAIL;} 
@@ -340,6 +345,14 @@ module compareTester (
         }
         if(state.q == state.TEST) {
           counter.d = counter.q + 1;
+        }
+        counter_indicator = counter.q;
+        case (state.q) {
+          state.SLEEP: state_indicator=b0001;
+          state.TEST:  state_indicator=b0010;
+          state.PASS:  state_indicator=b0100;
+          state.FAIL:  state_indicator=b1000;
+          default: state_indicator=b1111;
         }
 	}
 }

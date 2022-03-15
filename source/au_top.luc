@@ -20,7 +20,7 @@ module au_top (
     button_conditioner button_cond[5];
     edge_detector buttondetector[5](#RISE(1), #FALL(0));
     .rst(rst) {
-      manual_test manual_t;
+      manualTester manual_t;
       // booleanTester boolean_tester;
       #DIV(DIV) {
         // multi_seven_seg seg_display;

@@ -12,7 +12,6 @@ module au_top (
   ) {
   
   sig rst;                  // reset signal
-  const DIV = 16;
   .clk(clk) {
     // The reset conditioner is used to synchronize the reset signal to the FPGA
     // clock. This ensures the entire FPGA comes out of reset at the same time.
@@ -22,13 +21,8 @@ module au_top (
     .rst(rst){
       
       // booleanTester adder_tester(.error(0));
-     shifterTester adder_tester;
+      aluTester alu_tester;
       
-      // booleanTester boolean_tester;
-      dff start_test;
-      #DIV(DIV) {
-        // multi_seven_seg seg_display;
-      }
     }
   }
   
@@ -54,23 +48,17 @@ module au_top (
     buttondetector.in = button_cond.out;
     
     
-    if(buttondetector.out[0]) {
-        start_test.d = 1;
-    }
-    if(buttondetector.out[1]) {
-      start_test.d = 0;
-     }
+    // io_led
+    io_led[0][2:0] = alu_tester.out;
+    io_led[1][1:0] = alu_tester.indicator;
+    io_led[1][7:4] = alu_tester.state_indicator;
+    io_led[2] = alu_tester.counter_indicator;
     
-    io_led[0][5:0] = button_cond.out;
-    io_led[0][7] = start_test.q;
-    io_led[1][1:0] = adder_tester.indicator;
-    io_led[1][7:4] = adder_tester.state_indicator;
-    io_led[2] = adder_tester.counter_indicator;
     
     io_sel = 4h0;
-    adder_tester.start = start_test.q;
-    if(adder_tester.indicator[0] == 1) {
-      if(adder_tester.indicator[1] == 0) {
+    alu_tester.proceed = buttondetector.out[1];
+    if(alu_tester.indicator[0] == 1) {
+      if(alu_tester.indicator[1] == 0) {
         io_seg = ~b11110001;
       } else {
         io_seg = ~b11101101;

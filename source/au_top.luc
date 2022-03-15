@@ -29,7 +29,7 @@ module au_top (
     }
   }
   
-  fsm tester(.clk(clk), .rst(rst)) = {AUTO, MANUAL};
+  fsm tester(.clk(clk), .rst(rst), #INIT(MANUAL)) = {AUTO, MANUAL};
   
   
   always {
@@ -59,10 +59,10 @@ module au_top (
     
     
     // 7segment
-    multiSeg.values = $build(manual_t.out, 4);
+    multiSeg.values = $build(16hFFFF,4);
     
     
-    
+    // Button to change from Manual to Auto tester
     case (tester.q){
       
       tester.AUTO:
@@ -81,6 +81,8 @@ module au_top (
         io_led[0] = manual_t.ledout[7:0];
         io_seg = ~multiSeg.seg;
         io_sel = ~multiSeg.sel;
+        multiSeg.values = $build(manual_t.out, 4);
+        
         
         if (buttondetector.out[2]) {  // press down button to toggle tester
           tester.d = tester.AUTO;

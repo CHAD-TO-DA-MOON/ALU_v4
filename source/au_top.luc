@@ -21,6 +21,7 @@ module au_top (
     edge_detector buttondetector[5](#RISE(1), #FALL(0));
     .rst(rst) {
       manualTester manual_t;
+      multiSevenSegment multiSeg;
       // booleanTester boolean_tester;
       #DIV(DIV) {
         // multi_seven_seg seg_display;

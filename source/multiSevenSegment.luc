@@ -16,7 +16,7 @@ module multiSevenSegment #(
     counter ctr (#DIV(DIV), #SIZE(DIGIT_BITS), #TOP(DIGITS-1)); 
     
   }
-  seven_segment seg_dec;
+  sevenSegment seg_dec;
   decoder digit_dec (#WIDTH(DIGIT_BITS)); // digit decoder
   
   always {
@@ -25,8 +25,5 @@ module multiSevenSegment #(
     
     digit_dec.in = ctr.value;             // decode active digit to one-hot
     sel = digit_dec.out;                  // output the active digit
-    
-    
-         
   }
 }

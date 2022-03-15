@@ -1,10 +1,10 @@
 module compareTester (
     input clk, 
     input rst,
-    input start,      // Press the "start" button to begin the unit tester. Start = 1 -> Tester wakes up; Start = 0 -> Tester is sleeping.
+    input start,         // button to begin unit tester, 1: tester wakes up, 0: tester sleeps
+    output indicator[2], // indicate if passed test, 1: pass, 0: fail
     output state_indicator[4],
-    output counter_indicator[8],
-    output indicator[2]    // Success = 1 -> Pass the tester. Success = 0 -> Fail the tester.
+    output counter_indicator[8]
 ) {
 	dff counter[6](#INIT(0), .clk(clk), .rst(rst));
 	fsm state(.clk(clk), .rst(rst)) = {SLEEP, TEST, PASS, FAIL};
@@ -17,8 +17,6 @@ module compareTester (
         adderUnit.y = b0000000000000000;
         adderUnit.alufn = b000000;
         compareUnit.alufn = b000000;
-        compareUnit.x = 16h0;
-        compareUnit.y = 16h0;
         compareUnit.z = adderUnit.z;
         compareUnit.v = adderUnit.v;
         compareUnit.n = adderUnit.n;

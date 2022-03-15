@@ -22,7 +22,7 @@ module manualTester (
     the_alu.y = 0;
     the_alu.alufn = 0;
     out = 16h0000;
-	ledout = the_alu.out;
+    ledout = the_alu.out;
 	
     zvn[0] = the_alu.z;
     zvn[1] = the_alu.v;

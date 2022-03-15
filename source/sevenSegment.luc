@@ -1,4 +1,4 @@
-module seven_segment (
+module sevenSegment (
     input char[4],
     output segs[7]
   ) {

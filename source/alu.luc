@@ -38,8 +38,6 @@ module alu(
         n_copy = adderUnit.n;
 
         compareUnit.alufn = alufn;
-        compareUnit.x = x;
-        compareUnit.y = y;
         compareUnit.z = z_copy;
         compareUnit.v = v_copy;
         compareUnit.n = n_copy;
@@ -63,12 +61,12 @@ module alu(
         minimumUnit.y = y;
 
         // ALUFN[5:3] are used to select which unit will supply the value for the ALU output.
-	    // ALUFN[5:3] == 000 -> adder (ALUFN[1] == 0) / multiplier (ALUFN[1] == 1)
-	    // ALUFN[5:3] == 001 -> multiplier
-	    // ALUFN[5:3] == 010 -> boolean
-	    // ALUFN[5:3] == 011 -> shifter
-            // ALUFN[5:3] == 100 -> compare
-	    // ALUFN[5:3] == 101 -> minimum
+        // ALUFN[5:3] == 000 -> adder (ALUFN[1] == 0) / multiplier (ALUFN[1] == 1)
+        // ALUFN[5:3] == 001 -> multiplier
+        // ALUFN[5:3] == 010 -> boolean
+        // ALUFN[5:3] == 011 -> shifter
+        // ALUFN[5:3] == 100 -> compare
+        // ALUFN[5:3] == 101 -> minimum
         case (alufn[5:3]) {
             b000: out = adderUnit.out;
             b001: out = multiplierUnit.out;

@@ -10,7 +10,7 @@ module minimum(
 ){
     always{
         out = b0000000000000000;
-	       // ALUFN[2:1] are used to control the minimum unit.
+        // ALUFN[2:1] are used to control the minimum unit.
         // ALUFN[2:1] == 00 -> min
         // ALUFN[2:1] == 01 -> max
 	                

@@ -12,7 +12,7 @@ module aluTester (
   }
   
   .clk(clk), .rst(reset), .start(start) {
-    adderTester adderFSM;
+    adderTester   adderFSM;
     booleanTester booleanFSM;
     multiplierTester multiplierFSM;
     shifterTester shifterFSM;
@@ -21,7 +21,6 @@ module aluTester (
   }
   
   always {
-    
   
     if (reset & 1){
         testAluFsm.d = testAluFsm.ADDER;

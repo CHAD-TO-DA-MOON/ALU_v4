@@ -7,13 +7,13 @@ module multiplier(
     output out[16]
 ){
 	always{
-            // ALUFN[0] are used to control the multiplier unit.
+	    // ALUFN[0] are used to control the multiplier unit.
 	    // ALUFN[0] == 0 -> x * y
 	    // ALUFN[0] == 1 -> x / y
-            case (alufn[0]){
-                b0: out = x * y;
-                b1: out = x / y;
-                default: out = b0000000000000000;
-            }
+	    case (alufn[0]){
+	        b0: out = x * y;
+	        b1: out = x / y;
+	        default: out = b0000000000000000;
+	    }
 	}
 }

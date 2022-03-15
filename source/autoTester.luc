@@ -36,7 +36,7 @@ module autoTester (
     
     
     io_sel = 4h0;
-    alu_tester.proceed = buttondetector.out[1];
+    alu_tester.proceed = buttondetector.out[2];
     if(alu_tester.indicator[0] == 1) {
       if(alu_tester.indicator[1] == 0) {
         io_seg = ~b11110001;

@@ -14,7 +14,7 @@ module aluTester (
   
   .clk(clk), .rst(rst){
       dff run_test(#INIT(0));
-     .start(run_test.q) {
+     .start(run_test.q), .error(1){
       adderTester adderFSM;
       booleanTester booleanFSM;
       multiplierTester multiplierFSM;

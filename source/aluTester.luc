@@ -1,0 +1,64 @@
+module aluTester (
+    input clk,  // clock
+    input reset,
+    output out[3], // alufn signals
+    output indicator[2]
+  ) {
+  
+  .clk(clk){
+    fsm testAluFsm={ADDER, BOOL, SHIFTER, COMPARE, MIN, MULT}; 
+  }
+  
+  .clk(clk), .rst(reset), .start(1){
+    adderTester adderFSM;
+    booleanTester booleanFSM;
+    multiplierTester multiplierFSM;
+    shifterTester shifterFSM;
+    compareTester compareFSM;
+    minimumTester minFSM;
+  }
+  
+  always {
+    
+  
+    if (reset & 1){
+        testAluFsm.d = testAluFsm.ADDER;
+    }
+    else{
+        testAluFsm.d = testAluFsm.q;
+    }
+    out = 3b0;
+    indicator = 2b0;
+    case(testAluFsm.q){
+      testAluFsm.ADDER : 
+              out = 3b000;
+              indicator = adderFSM.indicator;
+              testAluFsm.d = testAluFsm.MULT;
+      testAluFsm.MULT : 
+              out = 3b001;
+              indicator = multiplierFSM.indicator;
+              testAluFsm.d = testAluFsm.BOOL;     
+      testAluFsm.BOOL : 
+              out = 3b010;
+              indicator = booleanFSM.indicator;
+              testAluFsm.d = testAluFsm.SHIFTER;     
+      testAluFsm.SHIFTER : 
+              out = 3b011;
+              indicator = shifterFSM.indicator;
+              testAluFsm.d = testAluFsm.COMPARE;        
+      testAluFsm.COMPARE : 
+              out = 3b100;
+              indicator =  compareFSM.indicator;
+              testAluFsm.d = testAluFsm.MIN;
+      testAluFsm.MIN : 
+              out = 3b101;
+              indicator = minFSM.indicator;
+              testAluFsm.d = testAluFsm.ADDER;        
+      
+      default:
+              out = 3b000;
+              testAluFsm.d = testAluFsm.ADDER;      
+                          
+    }
+  }
+}

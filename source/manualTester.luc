@@ -1,0 +1,62 @@
+module manual_test (
+    input clk,  // clock
+    input rst,  // reset
+    input proceed,
+    input data[16],
+    output out[16],
+    output z,
+    output v,
+    output n
+  ) {
+  .clk(clk){
+    fsm state(#INIT(IDLE)) = {IDLE, WAIT_A, WAIT_B, WAIT_FN, TEST};
+    .rst(rst){
+      #INIT(0){
+        dff reg_a[16], reg_b[16], reg_fn[6];
+      }
+    }
+  }
+  alu the_alu;
+  
+  always {
+    the_alu.x = 0;
+    the_alu.y = 0;
+    the_alu.alufn = 0;
+    out = the_alu.out;
+    z = the_alu.z;
+    v = the_alu.v;
+    n = the_alu.n;
+    
+    case(state.q) {
+      state.IDLE:
+        if(proceed) {state.d=state.WAIT_A;}
+      state.WAIT_A:
+        if(proceed) {
+          reg_a.d=data;
+          state.d=state.WAIT_B;
+        }
+      state.WAIT_B:
+        if(proceed) {
+          reg_b.d=data;
+          state.d=state.WAIT_FN;
+        }
+      state.WAIT_FN:
+        if(proceed) {
+          reg_fn.d=data[5:0];
+          state.d=state.TEST;
+        }
+      state.TEST:
+        // alu
+        the_alu.x = reg_a.q;
+        the_alu.y = reg_b.q;
+        the_alu.alufn = reg_fn.q;
+        
+        if(proceed) {
+          reg_a.d = 0; 
+          reg_b.d = 0; 
+          reg_fn.d = 0;
+          state.d=state.IDLE;
+        }
+    }
+  }
+}

@@ -129,16 +129,16 @@ module shifterTester (
             state.FAIL:
                 indicator = b01;
         }
-        if(state.q == state.TEST) {
+       if(state.q == state.TEST) {
           counter.d = counter.q + 1;
         }
         counter_indicator = counter.q;
         case (state.q) {
-          state.SLEEP: state_indicator=b0001;
-          state.TEST:  state_indicator=b0010;
-          state.PASS:  state_indicator=b0100;
-          state.FAIL:  state_indicator=b1000;
-          default:     state_indicator=b1111;
+      state.SLEEP: state_indicator=b0001;
+      state.TEST:  state_indicator=b0010;
+      state.PASS:  state_indicator=b0100;
+      state.FAIL:  state_indicator=b1000;
+      default: state_indicator=b1111;
         }
 
 	}

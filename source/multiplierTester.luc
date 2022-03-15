@@ -1,10 +1,10 @@
 module multiplierTester (
     input clk, 
     input rst,
-    input start,         // button to begin unit tester, 1: tester wakes up, 0: tester sleeps
-    output indicator[2], // indicate if passed test, 1: pass, 0: fail
+    input start,      // Press the "start" button to begin the unit tester. Start = 1 -> Tester wakes up; Start = 0 -> Tester is sleeping.
     output state_indicator[4],
-    output counter_indicator[8]
+    output counter_indicator[8],
+    output indicator[2]    // Success = 1 -> Pass the tester. Success = 0 -> Fail the tester.
 ) {
 	dff counter[4](#INIT(0), .clk(clk), .rst(rst));
 	fsm state(.clk(clk), .rst(rst)) = {SLEEP, TEST, PASS, FAIL};
@@ -14,8 +14,7 @@ module multiplierTester (
         indicator = b10;   // 10: pending; 11: pass all the tests; 01: fail the tester
         multiplierUnit.x = b0000000000000000;
         multiplierUnit.y = b0000000000000000;
-        multiplierUnit.alufn = b000000;
-
+        
         if (start == 0) {
             state.d = state.SLEEP;
             counter.d = 0;
@@ -30,7 +29,6 @@ module multiplierTester (
                     b0001:
                         // MUL operation test: 0 * 0
                         // 0 * 0 = 0
-                        multiplierUnit.alufn = 001010;  
                         multiplierUnit.x = 16h0000;
                         multiplierUnit.y = 16h0000;
                         if (multiplierUnit.out != 16h0000) {state.d = state.FAIL;} 
@@ -39,7 +37,6 @@ module multiplierTester (
                     b0010: 
                         // MUL operation test: pos * pos with overflow
                         // 32767 * 32767 = 1073676289
-                        multiplierUnit.alufn = 001010;  
                         multiplierUnit.x = 16h7FFF;
                         multiplierUnit.y = 16h7FFF;
                         if (multiplierUnit.out != 16h0001) {state.d = state.FAIL;} 
@@ -48,7 +45,6 @@ module multiplierTester (
                     b0011: 
                         // MUL operation test: pos * neg with overflow
                         // 32767 * -32767 = -1073676289
-                        multiplierUnit.alufn = 001010;  
                         multiplierUnit.x = 16h7FFF;
                         multiplierUnit.y = 16h8001;
                         if (multiplierUnit.out != 16hFFFF) {state.d = state.FAIL;} 
@@ -57,7 +53,6 @@ module multiplierTester (
                     b0100: 
                         // MUL operation test: neg * neg with overflow
                         // -32767 * -32767 = 1073676289
-                        multiplierUnit.alufn = 001010;  
                         multiplierUnit.x = 16h8001;
                         multiplierUnit.y = 16h8001;
                         if (multiplierUnit.out != 16h0001) {state.d = state.FAIL;} 
@@ -65,15 +60,13 @@ module multiplierTester (
 
                     b0101:
                         // MUL operation test: 0 * pos
-                        multiplierUnit.alufn = 001010;  
                         multiplierUnit.x = 16h0;
                         multiplierUnit.y = 16h7FFF;
                         if (multiplierUnit.out != 16h0) {state.d = state.FAIL;} 
                     
 
                     b0110:
-                        // MUL operation test: 0 * neg
-                        multiplierUnit.alufn = 001010;  
+                        // MUL operation test: 0 * neg 
                         multiplierUnit.x = 16h0;
                         multiplierUnit.y = 16h8001;
                         if (multiplierUnit.out != 16h0) {state.d = state.FAIL;} 
@@ -82,7 +75,6 @@ module multiplierTester (
                     b0111: 
                         // MUL operation test: pos * pos without overflow
                         // 3 * 7 = 21
-                        multiplierUnit.alufn = 001010;  
                         multiplierUnit.x = 16h0003;
                         multiplierUnit.y = 16h0007;
                         if (multiplierUnit.out != 16h0015) {state.d = state.FAIL;} 
@@ -90,8 +82,7 @@ module multiplierTester (
 
                     b1000: 
                         // MUL operation test: pos * neg without overflow 
-                        // 3 * -7 = -21
-                        multiplierUnit.alufn = 001010;  
+                        // 3 * -7 = -21                    
                         multiplierUnit.x = 16h0003;
                         multiplierUnit.y = 16hFFF9;
                         if (multiplierUnit.out != 16hFFEB) {state.d = state.FAIL;} 
@@ -100,58 +91,12 @@ module multiplierTester (
                     b1001: 
                         // MUL operation test: neg * neg without overflow
                         // -3 * -7 = 21
-                        multiplierUnit.alufn = 001010;  
                         multiplierUnit.x = 16hFFFD;
                         multiplierUnit.y = 16hFFF9;
                         if (multiplierUnit.out != 16h0015) {state.d = state.FAIL;} 
-                    
+             
 
-                    b1010:
-                        // DIV operation test: 0 / pos
-                        // 0/3 = 0
-                        multiplierUnit.alufn = 001011;  
-                        multiplierUnit.x = 16h0000;
-                        multiplierUnit.y = 16h0003;
-                        if (multiplierUnit.out != 16h0000) {state.d = state.FAIL;} 
-                    
-
-                    b1011: 
-                        // DIV operation test: pos / pos 
-                        // 21/3 = 7
-                        multiplierUnit.alufn = 001011;  
-                        multiplierUnit.x = 16h0015;
-                        multiplierUnit.y = 16h0003;
-                        if (multiplierUnit.out != 16h0007) {state.d = state.FAIL;} 
-                    
-
-                    b1100:
-                        // DIV operation test: pos / neg  
-                        // 21/(-3) = -7
-                        multiplierUnit.alufn = 001011;  
-                        multiplierUnit.x = 16h0015;
-                        multiplierUnit.y = 16hFFFD;
-                        if (multiplierUnit.out != 16hFFF9) {state.d = state.FAIL;} 
-                    
-
-                    b1101: 
-                        // DIV operation test: neg / neg 
-                        // (-21)/(-3) = 7
-                        multiplierUnit.alufn = 001011;  
-                        multiplierUnit.x = 16hFFEB;
-                        multiplierUnit.y = 16hFFFD;
-                        if (multiplierUnit.out != 16h0007) {state.d = state.FAIL;} 
-                    
-
-                    b1110:
-                        // MUL operation test: 0 / neg
-                        // 0/-3 = 0
-                        multiplierUnit.alufn = 001011;  
-                        multiplierUnit.x = 16h0;
-                        multiplierUnit.y = 16hFFFD;
-                        if (multiplierUnit.out != 16h0) {state.d = state.FAIL;} 
-                    
-                    
-                    b1111: 
+                    b1010: 
                         state.d = state.PASS;
 
                 }

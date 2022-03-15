@@ -169,11 +169,11 @@ module minimumTester (
                         adderUnit.alufn = b101001; 
                         adderUnit.x = 16hFCFE;
                         adderUnit.y = 16hFCFD;
-                        minimumUnit.x = 16hFFFD;
-                        minimumUnit.y = 16hFFFE;
+                        minimumUnit.x = 16hFCFE;
+                        minimumUnit.y = 16hFCFD;
                         minimumUnit.v = adderUnit.v;
                         minimumUnit.n = adderUnit.n;
-                        if (minimumUnit.out != 16hFFFD) {state.d = state.FAIL;}
+                        if (minimumUnit.out != 16hFCFD) {state.d = state.FAIL;}
                     
 
 

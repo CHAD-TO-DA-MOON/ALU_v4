@@ -3,10 +3,9 @@ module manualTester (
     input rst,  // reset
     input proceed,
     input data[16],
+    output ledout[16],
     output out[16],
-    output z,
-    output v,
-    output n
+    output zvn[3]
   ) {
   .clk(clk){
     fsm state(#INIT(IDLE)) = {IDLE, WAIT_A, WAIT_B, TEST};
@@ -23,9 +22,11 @@ module manualTester (
     the_alu.y = 0;
     the_alu.alufn = 0;
     out = 16h0000;
-    z = the_alu.z;
-    v = the_alu.v;
-    n = the_alu.n;
+	ledout = the_alu.out;
+	
+    zvn[0] = the_alu.z;
+    zvn[1] = the_alu.v;
+    zvn[2] = the_alu.n;
     
     case(state.q) {
       state.IDLE:

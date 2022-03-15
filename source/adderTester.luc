@@ -107,7 +107,7 @@ module adderTester (
                         adderUnit.y = 16hFFFD;
                         if (adderUnit.out != 16hFFFB) {state.d = state.FAIL;} 
                         if (adderUnit.z != 0) {state.d = state.FAIL;}
-                        if (adderUnit.v != 1) {state.d = state.FAIL;}
+                        if (adderUnit.v != 0) {state.d = state.FAIL;}
                         if (adderUnit.n != 1) {state.d = state.FAIL;}
                      
 

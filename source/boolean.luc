@@ -13,8 +13,8 @@ module boolean(
 	    // ALUFN[1:0] == 10 -> x ^ y
 	    // ALUFN[1:0] == 11 -> x
 	    case (alufn[1:0]) {
-	        b00: out = x && y;
-	        b01: out = x || y;
+	        b00: out = x & y;
+	        b01: out = x | y;
 	        b10: out = x ^ y;
 	        b11: out = x;
 	        default: out = b0000000000000000;

@@ -28,6 +28,7 @@ module au_top (
     }
   }
   
+  
   always {
     reset_cond.in = ~rst_n; // input raw inverted reset signal
     rst = reset_cond.out;   // conditioned reset
@@ -55,5 +56,8 @@ module au_top (
     io_led[1] = manual_t.out[15:8];
     io_led[0] = manual_t.out[7:0];
     
+    multiSeg.values = $build(manual_t.out, 4);
+    io_seg = ~multiSeg.seg;
+    io_sel = ~multiSeg.sel;
   }
 }

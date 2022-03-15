@@ -1,4 +1,4 @@
-module multi_seven_segment #(
+module multiSevenSegment #(
     DIGITS = 4 : DIGITS > 0,
     DIV = 16 : DIV >= 0
   )(

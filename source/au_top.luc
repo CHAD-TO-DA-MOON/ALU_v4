@@ -55,21 +55,21 @@ module au_top (
     
     
     // connect auto input
-    auto_t.io_button = buttondetector.out;
+    auto_t.proceed = buttondetector.out[2];
     
     
     // 7segment
     multiSeg.values = $build(16hFFFF,4);
-    io_seg = multiSeg.seg;
-    io_sel = multiSeg.sel;
+    io_seg = ~multiSeg.seg;
+    io_sel = ~multiSeg.sel;
     
     // Button to change from Manual to Auto tester
     case (tester.q){
       
       tester.IDLE:
-        multiSeg.values = $build(16hFFFF,4);
-        io_seg = multiSeg.seg;
-        io_sel = multiSeg.sel;
+        multiSeg.values = {4b0000, 4b0000, 4b0000, 4b0000};
+        io_seg = ~multiSeg.seg;
+        io_sel = ~multiSeg.sel;
         if (buttondetector.out[3]) {  // left button
           tester.d = tester.MANUAL;
         }

@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="alu_checkoff" board="Alchitry Au" language="Lucid" version="3">
   <files>
-    <src>multiSevenSegment.luc</src>
-    <src>autoTester.luc</src>
-    <src>minimum.luc</src>
-    <src>booleanTester.luc</src>
-    <component>pipeline.luc</component>
-    <src>shifter.luc</src>
-    <component>counter.luc</component>
-    <src>multiplier.luc</src>
     <src>sevenSegment.luc</src>
-    <src>boolean.luc</src>
-    <src>shifterTester.luc</src>
-    <src>multiplierTester.luc</src>
-    <src>adderTester.luc</src>
-    <src top="true">au_top.luc</src>
-    <component>reset_conditioner.luc</component>
-    <src>manualTester.luc</src>
-    <component>button_conditioner.luc</component>
-    <src>compare.luc</src>
-    <src>aluTester.luc</src>
-    <src>compareTester.luc</src>
+    <component>pipeline.luc</component>
+    <src>multiplier.luc</src>
     <src>alu.luc</src>
-    <src>minimumTester.luc</src>
-    <component>decoder.luc</component>
-    <src>adder.luc</src>
+    <src>adderTester.luc</src>
+    <src>aluTester.luc</src>
+    <component>counter.luc</component>
+    <src>autoTester.luc</src>
+    <src>booleanTester.luc</src>
+    <src>shifter.luc</src>
     <src>au_top_auto.luc</src>
+    <src>minimumTester.luc</src>
+    <src top="true">au_top.luc</src>
+    <src>multiSevenSegment.luc</src>
+    <component>reset_conditioner.luc</component>
+    <component>button_conditioner.luc</component>
+    <src>minimum.luc</src>
+    <src>shifterTester.luc</src>
+    <src>compareTester.luc</src>
+    <src>multiplierTester.luc</src>
+    <component>decoder.luc</component>
+    <src>compare.luc</src>
+    <src>manualTester.luc</src>
+    <src>adder.luc</src>
     <component>edge_detector.luc</component>
+    <src>boolean.luc</src>
     <constraint lib="true">alchitry.acf</constraint>
     <constraint lib="true">io.acf</constraint>
     <constraint lib="true">au.xdc</constraint>

@@ -17,8 +17,8 @@ module autoTester (
     edge_detector buttondetector[5](#RISE(1), #FALL(0));
     .rst(rst){
       
-      // booleanTester adder_tester(.error(0));
-     shifterTester adder_tester;
+      // booleanTester alu_tester(.error(0));
+     shifterTester alu_tester;
       
       // booleanTester boolean_tester;
       dff start_test;
@@ -44,14 +44,14 @@ module autoTester (
     
     io_led[0][5:0] = button_cond.out;
     io_led[0][7] = start_test.q;
-    io_led[1][1:0] = adder_tester.indicator;
-    io_led[1][7:4] = adder_tester.state_indicator;
-    io_led[2] = adder_tester.counter_indicator;
+    io_led[1][1:0] = alu_tester.indicator;
+    io_led[1][7:4] = alu_tester.state_indicator;
+    io_led[2] = alu_tester.counter_indicator;
     
     io_sel = 4h0;
-    adder_tester.start = start_test.q;
-    if(adder_tester.indicator[0] == 1) {
-      if(adder_tester.indicator[1] == 0) {
+    alu_tester.start = start_test.q;
+    if(alu_tester.indicator[0] == 1) {
+      if(alu_tester.indicator[1] == 0) {
         io_seg = ~b11110001;
       } else {
         io_seg = ~b11101101;

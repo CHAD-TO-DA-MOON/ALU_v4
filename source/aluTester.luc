@@ -2,6 +2,7 @@ module aluTester (
     input clk,  // clock
     input rst,
     input proceed,
+    input error,
     output out[3], // alufn signals
     output indicator[2],
     output counter_indicator[8],
@@ -14,7 +15,7 @@ module aluTester (
   
   .clk(clk), .rst(rst){
       dff run_test(#INIT(0));
-     .start(run_test.q) {
+     .start(run_test.q), .error(error){
       adderTester adderFSM;
       booleanTester booleanFSM;
       multiplierTester multiplierFSM;

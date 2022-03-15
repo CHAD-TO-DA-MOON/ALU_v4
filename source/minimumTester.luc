@@ -44,8 +44,8 @@ module minimumTester (
                         minimumUnit.y = 16b0;
                         minimumUnit.v = adderUnit.v;
                         minimumUnit.n = adderUnit.n;
-                        if (error == 1) {if (~multiplierUnit.out != 16b0) {state.d = state.FAIL;}}
-                        else{if (multiplierUnit.out != 16b0) {state.d = state.FAIL;}} 
+                        if (error == 1) {if (~minimumUnit.out != 16b0) {state.d = state.FAIL;}}
+                        else{if (minimumUnit.out != 16b0) {state.d = state.FAIL;}} 
                     
 
                     b00010: 

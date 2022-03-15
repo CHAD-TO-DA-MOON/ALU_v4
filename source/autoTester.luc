@@ -2,6 +2,7 @@ module autoTester (
     input clk,              // 100MHz clock
     input rst,            // reset button (active low)
     input proceed,   // 5 buttons on IO Shield
+    input error,
     output io_led [3][8],   // LEDs on IO Shield
     output io_seg [8],      // 7-segment LEDs on IO Shield
     output io_sel [4]      // Digit select on IO Shield
@@ -11,7 +12,7 @@ module autoTester (
   .clk(clk) {
     // The reset conditioner is used to synchronize the reset signal to the FPGA
     // clock. This ensures the entire FPGA comes out of reset at the same time.
-    .rst(rst){
+    .rst(rst), .error(error){
       
       aluTester alu_tester;
       

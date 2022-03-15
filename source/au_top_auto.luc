@@ -7,7 +7,8 @@ module au_top (
     output io_led [3][8],   // LEDs on IO Shield
     output io_seg [8],      // 7-segment LEDs on IO Shield
     output io_sel [4],      // Digit select on IO Shield
-    input io_button [5]   // 5 buttons on IO Shield
+    input io_button [5],   // 5 buttons on IO Shield
+    input error
     //input io_dip [3][8]     // DIP switches on IO Shield
   ) {
   
@@ -18,7 +19,7 @@ module au_top (
     reset_conditioner reset_cond;
     button_conditioner button_cond[5];
     edge_detector buttondetector[5](#RISE(1), #FALL(0));
-    .rst(rst){
+    .rst(rst), .error(error){
       
       // booleanTester adder_tester(.error(0));
       aluTester alu_tester;

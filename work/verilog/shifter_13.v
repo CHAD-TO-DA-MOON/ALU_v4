@@ -4,10 +4,10 @@
    This is a temporary file and any changes made to it will be destroyed.
 */
 
-module multiplier_11 (
+module shifter_13 (
     input [15:0] x,
     input [15:0] y,
-    input [15:0] alufn,
+    input [5:0] alufn,
     output reg [15:0] out
   );
   
@@ -15,15 +15,18 @@ module multiplier_11 (
   
   always @* begin
     
-    case (alufn[0+0-:1])
-      1'h0: begin
-        out = x * y;
+    case (alufn[0+1-:2])
+      2'h0: begin
+        out = x << y[0+3-:4];
       end
-      1'h1: begin
-        out = x / y;
+      2'h1: begin
+        out = x >> y[0+3-:4];
+      end
+      2'h2: begin
+        out = $signed(x) >>> y[0+3-:4];
       end
       default: begin
-        out = 16'h0000;
+        out = x;
       end
     endcase
   end

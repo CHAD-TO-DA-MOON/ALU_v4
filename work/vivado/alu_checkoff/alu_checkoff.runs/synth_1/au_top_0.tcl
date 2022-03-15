@@ -84,18 +84,22 @@ set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib {
-  D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/adder_7.v
-  D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/alu_6.v
-  D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/boolean_8.v
+  D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/adder_11.v
+  D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/alu_7.v
+  D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/boolean_12.v
   D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/button_conditioner_2.v
-  D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/compare_10.v
+  D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/compare_14.v
+  D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/counter_8.v
+  D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/decoder_10.v
   D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/edge_detector_3.v
   D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/manualTester_4.v
-  D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/minimum_12.v
-  D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/multiplier_11.v
-  D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/pipeline_5.v
+  D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/minimum_16.v
+  D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/multiSevenSegment_5.v
+  D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/multiplier_15.v
+  D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/pipeline_6.v
   D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/reset_conditioner_1.v
-  D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/shifter_9.v
+  D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/sevenSegment_9.v
+  D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/shifter_13.v
   D:/repos/alu_checkoff/work/vivado/alu_checkoff/alu_checkoff.srcs/sources_1/imports/verilog/au_top_0.v
 }
 OPTRACE "Adding files" END { }

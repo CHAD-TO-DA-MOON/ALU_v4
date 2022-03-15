@@ -72,6 +72,16 @@ module au_top_0 (
     .v(M_manual_t_v),
     .n(M_manual_t_n)
   );
+  wire [7-1:0] M_multiSeg_seg;
+  wire [4-1:0] M_multiSeg_sel;
+  reg [16-1:0] M_multiSeg_values;
+  multi_seven_segment_5 multiSeg (
+    .clk(clk),
+    .rst(rst),
+    .values(M_multiSeg_values),
+    .seg(M_multiSeg_seg),
+    .sel(M_multiSeg_sel)
+  );
   
   always @* begin
     M_reset_cond_in = ~rst_n;
@@ -88,5 +98,8 @@ module au_top_0 (
     M_manual_t_data[8+7-:8] = io_dip[8+7-:8];
     io_led[8+7-:8] = M_manual_t_out[8+7-:8];
     io_led[0+7-:8] = M_manual_t_out[0+7-:8];
+    M_multiSeg_values = M_manual_t_out;
+    io_seg = ~M_multiSeg_seg;
+    io_sel = ~M_multiSeg_sel;
   end
 endmodule

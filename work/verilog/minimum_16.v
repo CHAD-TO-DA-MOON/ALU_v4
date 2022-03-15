@@ -4,9 +4,11 @@
    This is a temporary file and any changes made to it will be destroyed.
 */
 
-module boolean_8 (
-    input [15:0] x,
-    input [15:0] y,
+module minimum_16 (
+    input v,
+    input n,
+    input x,
+    input y,
     input [5:0] alufn,
     output reg [15:0] out
   );
@@ -14,19 +16,22 @@ module boolean_8 (
   
   
   always @* begin
+    out = 16'h0000;
     
-    case (alufn[0+1-:2])
+    case (alufn[1+1-:2])
       2'h0: begin
-        out = x && y;
+        if (n ^ v == 1'h1) begin
+          out = x;
+        end else begin
+          out = y;
+        end
       end
       2'h1: begin
-        out = x || y;
-      end
-      2'h2: begin
-        out = x ^ y;
-      end
-      2'h3: begin
-        out = x;
+        if (n ^ v == 1'h1) begin
+          out = y;
+        end else begin
+          out = x;
+        end
       end
       default: begin
         out = 16'h0000;

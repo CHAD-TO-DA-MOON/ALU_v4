@@ -4,7 +4,7 @@
    This is a temporary file and any changes made to it will be destroyed.
 */
 
-module alu_6 (
+module alu_7 (
     input [15:0] x,
     input [15:0] y,
     input [5:0] alufn,
@@ -23,7 +23,7 @@ module alu_6 (
   reg [16-1:0] M_adderUnit_x;
   reg [16-1:0] M_adderUnit_y;
   reg [6-1:0] M_adderUnit_alufn;
-  adder_7 adderUnit (
+  adder_11 adderUnit (
     .x(M_adderUnit_x),
     .y(M_adderUnit_y),
     .alufn(M_adderUnit_alufn),
@@ -37,7 +37,7 @@ module alu_6 (
   reg [16-1:0] M_booleanUnit_x;
   reg [16-1:0] M_booleanUnit_y;
   reg [6-1:0] M_booleanUnit_alufn;
-  boolean_8 booleanUnit (
+  boolean_12 booleanUnit (
     .x(M_booleanUnit_x),
     .y(M_booleanUnit_y),
     .alufn(M_booleanUnit_alufn),
@@ -48,7 +48,7 @@ module alu_6 (
   reg [16-1:0] M_shifterUnit_x;
   reg [16-1:0] M_shifterUnit_y;
   reg [6-1:0] M_shifterUnit_alufn;
-  shifter_9 shifterUnit (
+  shifter_13 shifterUnit (
     .x(M_shifterUnit_x),
     .y(M_shifterUnit_y),
     .alufn(M_shifterUnit_alufn),
@@ -62,7 +62,7 @@ module alu_6 (
   reg [16-1:0] M_compareUnit_x;
   reg [16-1:0] M_compareUnit_y;
   reg [6-1:0] M_compareUnit_alufn;
-  compare_10 compareUnit (
+  compare_14 compareUnit (
     .z(M_compareUnit_z),
     .v(M_compareUnit_v),
     .n(M_compareUnit_n),
@@ -76,7 +76,7 @@ module alu_6 (
   reg [16-1:0] M_multiplierUnit_x;
   reg [16-1:0] M_multiplierUnit_y;
   reg [16-1:0] M_multiplierUnit_alufn;
-  multiplier_11 multiplierUnit (
+  multiplier_15 multiplierUnit (
     .x(M_multiplierUnit_x),
     .y(M_multiplierUnit_y),
     .alufn(M_multiplierUnit_alufn),
@@ -89,7 +89,7 @@ module alu_6 (
   reg [1-1:0] M_minimumUnit_x;
   reg [1-1:0] M_minimumUnit_y;
   reg [6-1:0] M_minimumUnit_alufn;
-  minimum_12 minimumUnit (
+  minimum_16 minimumUnit (
     .v(M_minimumUnit_v),
     .n(M_minimumUnit_n),
     .x(M_minimumUnit_x),

@@ -1,7 +1,7 @@
 Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2021.2 (win64) Build 3367213 Tue Oct 19 02:48:09 MDT 2021
-| Date             : Tue Mar 15 22:44:03 2022
+| Date             : Tue Mar 15 23:15:08 2022
 | Host             : LAPTOP-6EJINDQE running 64-bit major release  (build 9200)
 | Command          : report_power -file au_top_0_power_routed.rpt -pb au_top_0_power_summary_routed.pb -rpx au_top_0_power_routed.rpx
 | Design           : au_top_0
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.076        |
+| Total On-Chip Power (W)  | 0.084        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.004        |
+| Dynamic (W)              | 0.012        |
 | Device Static (W)        | 0.072        |
 | Effective TJA (C/W)      | 4.9          |
 | Max Ambient (C)          | 84.6         |
@@ -53,16 +53,16 @@ Table of Contents
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |     0.001 |        3 |       --- |             --- |
-| Slice Logic    |    <0.001 |      809 |       --- |             --- |
-|   LUT as Logic |    <0.001 |      512 |     20800 |            2.46 |
-|   CARRY4       |    <0.001 |       89 |      8150 |            1.09 |
-|   Register     |    <0.001 |       70 |     41600 |            0.17 |
-|   Others       |     0.000 |       16 |       --- |             --- |
-| Signals        |    <0.001 |      709 |       --- |             --- |
+| Slice Logic    |     0.001 |      878 |       --- |             --- |
+|   LUT as Logic |    <0.001 |      559 |     20800 |            2.69 |
+|   CARRY4       |    <0.001 |       94 |      8150 |            1.15 |
+|   Register     |    <0.001 |       92 |     41600 |            0.22 |
+|   Others       |     0.000 |       18 |       --- |             --- |
+| Signals        |     0.002 |      812 |       --- |             --- |
 | DSPs           |    <0.001 |        1 |        90 |            1.11 |
-| I/O            |     0.001 |       65 |       170 |           38.24 |
+| I/O            |     0.008 |       65 |       170 |           38.24 |
 | Static Power   |     0.072 |          |           |                 |
-| Total          |     0.076 |          |           |                 |
+| Total          |     0.084 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -72,9 +72,9 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.013 |       0.003 |      0.010 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.014 |       0.004 |      0.010 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.013 |       0.000 |      0.013 |       NA    | Unspecified | NA         |
-| Vcco33    |       3.300 |     0.001 |       0.000 |      0.001 |       NA    | Unspecified | NA         |
+| Vcco33    |       3.300 |     0.003 |       0.002 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -141,8 +141,8 @@ Table of Contents
 +------------+-----------+
 | Name       | Power (W) |
 +------------+-----------+
-| au_top_0   |     0.004 |
-|   manual_t |     0.002 |
+| au_top_0   |     0.012 |
+|   manual_t |     0.003 |
 +------------+-----------+
 
 

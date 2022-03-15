@@ -4,10 +4,7 @@
    This is a temporary file and any changes made to it will be destroyed.
 */
 
-module compare_10 (
-    input z,
-    input v,
-    input n,
+module boolean_12 (
     input [15:0] x,
     input [15:0] y,
     input [5:0] alufn,
@@ -17,20 +14,22 @@ module compare_10 (
   
   
   always @* begin
-    out = 16'h0000;
     
-    case (alufn[1+1-:2])
+    case (alufn[0+1-:2])
       2'h0: begin
-        out[0+0-:1] = z;
+        out = x & y;
       end
       2'h1: begin
-        out[0+0-:1] = n ^ v;
+        out = x | y;
       end
       2'h2: begin
-        out[0+0-:1] = z || (n ^ v);
+        out = x ^ y;
+      end
+      2'h3: begin
+        out = x;
       end
       default: begin
-        out[0+0-:1] = 1'h0;
+        out = 16'h0000;
       end
     endcase
   end

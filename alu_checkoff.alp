@@ -4,6 +4,7 @@
     <src>adderTester.luc</src>
     <src>shifterTester.luc</src>
     <component>pipeline.luc</component>
+    <src>multiSevenSegment.luc</src>
     <src>multiplierTester.luc</src>
     <src>minimum.luc</src>
     <component>counter.luc</component>
@@ -22,6 +23,7 @@
     <src>aluTester.luc</src>
     <component>reset_conditioner.luc</component>
     <component>edge_detector.luc</component>
+    <src>sevenSegment.luc</src>
     <component>button_conditioner.luc</component>
     <constraint lib="true">alchitry.acf</constraint>
     <constraint lib="true">io.acf</constraint>

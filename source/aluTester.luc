@@ -13,8 +13,8 @@ module aluTester (
   }
   
   .clk(clk), .rst(rst){
-      dff start(#INIT(0));
-     .start(start.q) {
+      dff run_test(#INIT(0));
+     .start(run_test.q) {
       adderTester adderFSM;
       booleanTester booleanFSM;
       multiplierTester multiplierFSM;
@@ -28,22 +28,22 @@ module aluTester (
     
   
     if (rst & 1){
-        testAluFsm.d = testAluFsm.ADDER;
+        testAluFsm.d = testAluFsm.IDLE;
     }
     else{
         testAluFsm.d = testAluFsm.q;
     }
     out = 3b0;
-    indicator = 2b0;
+    indicator = 2b10;
     counter_indicator = 0;
     state_indicator = 0;
     case(testAluFsm.q){
       testAluFsm.IDLE:
               if (proceed == 1) {
                 testAluFsm.d = testAluFsm.ADDER;
-                start.d = 1;
+                run_test.d = 1;
               } else {
-                start.d = 0;
+                run_test.d = 0;
               }  
       testAluFsm.ADDER : 
               out = 3b000;

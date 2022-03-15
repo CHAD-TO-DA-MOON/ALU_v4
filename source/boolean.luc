@@ -8,8 +8,8 @@ module boolean(
 ){
 	always{
 	    // ALUFN[1:0] are used to control the boolean unit.
-	    // ALUFN[1:0] == 00 -> x && y
-	    // ALUFN[1:0] == 01 -> x || y
+	    // ALUFN[1:0] == 00 -> x & y
+	    // ALUFN[1:0] == 01 -> x | y
 	    // ALUFN[1:0] == 10 -> x ^ y
 	    // ALUFN[1:0] == 11 -> x
 	    case (alufn[1:0]) {

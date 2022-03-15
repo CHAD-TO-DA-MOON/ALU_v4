@@ -3,17 +3,9 @@ module multiplier(
     // This unit generates a 16-bit output (the lower-order 16 bits of the multiplication of x and y).
     input x[16],
     input y[16],
-    input alufn[16],
     output out[16]
 ){
 	always{
-	    // ALUFN[0] are used to control the multiplier unit.
-	    // ALUFN[0] == 0 -> x * y
-	    // ALUFN[0] == 1 -> x / y
-	    case (alufn[0]){
-	        b0: out = x * y;
-	        b1: out = x / y;
-	        default: out = b0000000000000000;
-	    }
+    out = x * y;
 	}
 }

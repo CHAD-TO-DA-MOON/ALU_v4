@@ -222,13 +222,13 @@ module minimumTester (
                         // MAX: pos < pos without overflow
                         minimumUnit.alufn = b101011;  
                         adderUnit.alufn = b101011; 
-                        adderUnit.x = 16h0180;
-                        adderUnit.y = 16h0120;
-                        minimumUnit.x = 16h0180;
-                        minimumUnit.y = 16h0120;
+                        adderUnit.x = 16h0120;
+                        adderUnit.y = 16h0180;
+                        minimumUnit.x = 16h0120;
+                        minimumUnit.y = 16h0180;
                         minimumUnit.v = adderUnit.v;
                         minimumUnit.n = adderUnit.n;
-                        if (minimumUnit.out != 16h0120) {state.d = state.FAIL;}   
+                        if (minimumUnit.out != 16h0180) {state.d = state.FAIL;}   
                      
 
                     b10000: 
@@ -249,12 +249,12 @@ module minimumTester (
                         minimumUnit.alufn = b101011;  
                         adderUnit.alufn = b101011; 
                         adderUnit.x = 16hF000;
-                        adderUnit.y = 16h8FFF;
+                        adderUnit.y = 16h7FFF;
                         minimumUnit.x = 16hF000;
-                        minimumUnit.y = 16h8FFF;
+                        minimumUnit.y = 16h7FFF;
                         minimumUnit.v = adderUnit.v;
                         minimumUnit.n = adderUnit.n;
-                        if (minimumUnit.out != 16h8FFF) {state.d = state.FAIL;}
+                        if (minimumUnit.out != 16h7FFF) {state.d = state.FAIL;}
                     
 
                     b10010: 
@@ -313,13 +313,13 @@ module minimumTester (
                         // MAX: neg > neg without overflow
                         minimumUnit.alufn = b101011;  
                         adderUnit.alufn = b101011; 
-                        adderUnit.x = 16hFBBB;
-                        adderUnit.y = 16hFCCC;
-                        minimumUnit.x = 16hFBBB;
-                        minimumUnit.y = 16hFCCC;
+                        adderUnit.x = 16hFCCC;
+                        adderUnit.y = 16hFBBB;
+                        minimumUnit.x = 16hFCCC;
+                        minimumUnit.y = 16hFBBB;
                         minimumUnit.v = adderUnit.v;
                         minimumUnit.n = adderUnit.n;
-                        if (minimumUnit.out != 16hFBBB) {state.d = state.FAIL;}
+                        if (minimumUnit.out != 16hFCCC) {state.d = state.FAIL;}
                     
 
 

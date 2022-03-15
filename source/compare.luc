@@ -4,6 +4,8 @@ module compare(
     input z,
     input v,
     input n,
+    input x[16],
+    input y[16],
     input alufn[6],
     output out[16]
 ){
@@ -13,12 +15,13 @@ module compare(
 	    // ALUFN[2:1] == 00 -> x = y
 	    // ALUFN[2:1] == 01 -> x < y
 	    // ALUFN[2:1] == 10 -> x <= y
-	    
-	    case (alufn[2:1]) {
-	      b00: out[0] = z;
-	      b01: out[0] = n ^ v;	
-	      b10: out[0] = z || (n ^ v);
-	      default: out[0] = 0;
-	    }
+            
+            
+            case (alufn[2:1]) {
+	        b00: out[0] = z;
+                b01: out[0] = n ^ v;	
+                b10: out[0] = z || (n ^ v);
+                default: out[0] = 0;
+            }
 	}
 }
